@@ -14,12 +14,15 @@ class Gview extends StatelessWidget {
       "assets/road.jpg",
     ];
     return Container(
-        child: GridView.builder(
+        child: 
+        GridView.builder(
       itemCount: texts.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 10.0,
+        childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height / 4),
       ),
       itemBuilder: (BuildContext context, int index) {
         return Text(texts[index]);
