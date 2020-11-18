@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boom_menu/flutter_boom_menu.dart';
+import 'package:smartsales_v1/product.dart';
 import 'GView.dart';
 import 'model.dart';
 import 'package:shape_of_view/shape_of_view.dart';
@@ -17,14 +18,32 @@ class DashboardState extends State<Dashboard>
   AnimationController _controller;
   Animation<double> _scaleAnimation;
   Animation<Offset> _slideAnimation;
-
+  List<Products> prod = new List();
   @override
   void initState() {
-    super.initState();
+    prod.add(new Products(
+        id: "1",
+        name: "Lord Vader",
+        photo: "pasads",
+        price: "1000",
+        quantity: "200"));
+    prod.add(new Products(
+        id: "2",
+        name: "Lord Vader",
+        photo: "pasads",
+        price: "1000",
+        quantity: "200"));
+    prod.add(new Products(
+        id: "3",
+        name: "Lord Vader",
+        photo: "pasads",
+        price: "1000",
+        quantity: "200"));
     _controller = AnimationController(vsync: this, duration: duration);
     _scaleAnimation = Tween<double>(begin: 1, end: 0.6).animate(_controller);
     _slideAnimation = Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
         .animate(_controller);
+    super.initState();
   }
 
   @override
@@ -38,20 +57,56 @@ class DashboardState extends State<Dashboard>
     screenHeight = size.height;
     screenWidth = size.width;
     return Scaffold(
-      body: Container(
-        height: 1000,
-        child: Stack(
-          children: <Widget>[
-
-            menu(context),
-            // dashboard(context),
-            drawer(context),
-            // Gview(),
-            menuButton(context),
-          ],
+      // resizeToAvoidBottomInset: true,
+      body: Expanded(
+              child: Container(
+          child: Stack(
+            children: <Widget>[
+              menuButton(context),
+              dashboard(context),
+              Center(
+                child: Gview(),
+              ),
+              //  HomeTable(),
+              // menu(context),
+              // drawer(context),
+              dtable(context),
+              
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Widget dtable(context) {
+    return Wrap(children: <Widget>[
+      new Wrap(
+        children: [
+          Container(
+            // child: Padding(
+            //   padding: const EdgeInsets.fromLTRB(0, 300, 0, 0),
+            // child: SingleChildScrollView(
+            child: Column(children: <Widget>[
+              Row(
+                children: [
+                  Center(
+                      child: Padding(
+                    padding: const EdgeInsets.fromLTRB(200, 200, 200, 0),
+                    child: Flexible(
+                      child: Text(
+                        "Products",
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                    ),
+                  )),
+                ],
+              ),
+            ]),
+          ),
+        ],
+      ),
+    ]);
   }
 
   Widget menu(context) {
@@ -232,7 +287,7 @@ class DashboardState extends State<Dashboard>
                               },
                             ),
                             Text(
-                              "My Cards",
+                              "Smart Sales",
                               style:
                                   TextStyle(fontSize: 24, color: Colors.white),
                             ),
@@ -242,47 +297,32 @@ class DashboardState extends State<Dashboard>
                             ),
                           ]),
                       SizedBox(height: 50),
-                      Container(
-                        height: 200,
-                        child: PageView(
-                          controller: PageController(viewportFraction: 0.8),
-                          scrollDirection: Axis.horizontal,
-                          pageSnapping: true,
-                          children: <Widget>[
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              color: Colors.redAccent,
-                              width: 100,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              color: Colors.blueAccent,
-                              width: 100,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              color: Colors.greenAccent,
-                              width: 100,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   height: 200,
+                      //   child: PageView(
+                      //     controller: PageController(viewportFraction: 0.8),
+                      //     scrollDirection: Axis.horizontal,
+                      //     pageSnapping: true,
+                      //     children: <Widget>[
+                      //       Container(
+                      //         margin: const EdgeInsets.symmetric(horizontal: 8),
+                      //         color: Colors.redAccent,
+                      //         width: 100,
+                      //       ),
+                      //       Container(
+                      //         margin: const EdgeInsets.symmetric(horizontal: 8),
+                      //         color: Colors.blueAccent,
+                      //         width: 100,
+                      //       ),
+                      //       Container(
+                      //         margin: const EdgeInsets.symmetric(horizontal: 8),
+                      //         color: Colors.greenAccent,
+                      //         width: 100,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(height: 20),
-                      Text("Transaction",
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                      ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text("Windows"),
-                              subtitle: Text("Windows 10"),
-                              trailing: Text("-2900"),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return Divider(height: 16);
-                          },
-                          itemCount: 10),
                     ],
                   ),
                 )),
